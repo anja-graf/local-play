@@ -139,31 +139,58 @@ class _HostPageState extends State<HostPage> {
           const SizedBox(height: 24),
 
           const Text(
-            '2. Open Safari / Chrome and enter:',
+            '2. Open a Browser and enter:',
             style: TextStyle(fontSize: 18),
           ),
 
-          const SelectableText(
-            'http://game.local',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            children: [
+              const Expanded(
+                child: SelectableText(
+                  'http://game.local',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              if (info!.hotspot.address != null)
+                IconButton(
+                  icon: const Icon(Icons.qr_code),
+                  tooltip: 'Website QR Code',
+                  onPressed: () {
+                    final url = 'http://${info!.hotspot.address}/';
+
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Open LocalPlay'),
+                        content: SizedBox(
+                          width: 240,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 220,
+                                height: 220,
+                                child: QrImageView(
+                                  data: url,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              SelectableText(url),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+            ],
           ),
 
-          const Text(
-            'Experimental: the short address depends on '
-            'multicast support in the hotspot.',
-          ),
-
-          if (info!.hotspot.address != null) ...[
-            const SizedBox(height: 12),
-            const Text('If game.local does not work, use:'),
-            SelectableText('http://${info!.hotspot.address}'),
-          ] else
-            const Text(
-              'Could not detect hotspot IP; check your device.',
-            ),
+          
 
           if (!info!.mdnsStarted)
             const Text(
@@ -171,7 +198,7 @@ class _HostPageState extends State<HostPage> {
             ),
 
           const Text(
-            '“No Internet Connection” on the iPad is normal.',
+            '“No Internet Connection” warning is normal.',
           ),
         ],
 

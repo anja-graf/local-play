@@ -25,13 +25,14 @@ class HostService implements NetworkingService {
   final _hotspot = HotspotService();
   final _mdns = MdnsResponder();
 
-  late final LocalHttpServer _server =
-      LocalHttpServer(onMessage: (text) {
-    onMessage?.call(text);
-  });
+  late final LocalHttpServer _server = LocalHttpServer(
+    onAction: (action) {
+      onAction?.call(action);
+    },
+  );
 
-  // Callback for received messages
-  void Function(String)? onMessage;
+  void Function(GameAction)? onAction;
+
 
   Future<HostingInfo> startHosting() async {
     try {

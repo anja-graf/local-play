@@ -19,13 +19,15 @@ class _HostPageState extends State<HostPage> {
   bool busy = false;
   String? error;
 
-  @override
+ @override
   void initState() {
     super.initState();
 
-    hostService.onMessage = (text) {
+    hostService.onAction = (action) {
       if (mounted) {
-        setState(() => messages.insert(0, text));
+        setState(() {
+          messages.insert(0, '${action.type.name}: ${action.card}');
+        });
       }
     };
   }
@@ -78,7 +80,7 @@ class _HostPageState extends State<HostPage> {
 
   @override
   void dispose() {
-    hostService.onMessage = null;
+    hostService.onAction = null;
     hostService.stopHosting();
     super.dispose();
   }

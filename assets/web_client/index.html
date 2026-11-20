@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LocalPlay</title>
+</head>
+<body>
+  <h2>LocalPlay - Client</h2>
+
+  <button id="playCard">Play Red 5</button>
+  <p id="status"></p>
+
+  <script>
+    document.getElementById('playCard').addEventListener('click', async () => {
+      const status = document.getElementById('status');
+
+      try {
+        const response = await fetch('/action', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            type: 'playCard',
+            card: 'red_5'
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status);
+        }
+
+        status.textContent = 'Card played!';
+      } catch (err) {
+        status.textContent = 'Error: ' + err;
+      }
+    });
+  </script>
+</body>
+</html>

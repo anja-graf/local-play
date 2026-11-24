@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import '../../games/game_action.dart';
+import '../../cards/game_action.dart';
 
 class LocalHttpServer {
   HttpServer? _server;

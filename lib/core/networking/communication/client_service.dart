@@ -1,6 +1,6 @@
-import 'package:localplay/modules/networking/events/network_event.dart';
-import 'package:localplay/modules/networking/communication/networking_service.dart';
-import 'package:localplay/modules/games/game_action.dart';
+import 'package:localplay/core/networking/events/network_event.dart';
+import 'package:localplay/core/networking/communication/networking_service.dart';
+import 'package:localplay/core/cards/game_action.dart';
 
 class ClientService implements NetworkingService {
   @override

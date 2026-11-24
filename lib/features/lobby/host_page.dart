@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import '../modules/networking/communication/host_service.dart';
+import '../../core/networking/communication/host_service.dart';
 
 class HostPage extends StatefulWidget {
   const HostPage({super.key});

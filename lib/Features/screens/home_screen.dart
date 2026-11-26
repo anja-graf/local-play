@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 55),
 
-                SizedBox(
+                /*SizedBox(
                   width: double.infinity,
                   height: 58,
                   child: ElevatedButton(
@@ -57,8 +57,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 18),
-
+                const SizedBox(height: 18),*/
                 SizedBox(
                   width: double.infinity,
                   height: 58,
@@ -76,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     child: const Text(
-                      'Start a game',
+                      'Host a game',
                       style: TextStyle(fontSize: 18),
                     ),
                   ),

@@ -1,38 +1,16 @@
-import 'package:localplay/core/networking/events/network_event.dart';
-import 'package:localplay/core/networking/communication/networking_service.dart';
-import 'package:localplay/core/cards/game_action.dart';
 import '../connection/hotspot_service.dart';
 import '../connection/mdns_responder.dart';
 import 'local_http_server.dart';
 
-class HostService implements NetworkingService {
-  @override
-  Future<void> disconnect() {
-    // TODO: implement disconnect
-    throw UnimplementedError();
-  }
-
-  @override
-  // TODO: implement events
-  Stream<NetworkEvent> get events => throw UnimplementedError();
-
-  @override
-  Future<void> sendAction(GameAction action) {
-    // TODO: implement sendAction
-    throw UnimplementedError();
-  }
-  
+class HostService {
   final _hotspot = HotspotService();
   final _mdns = MdnsResponder();
 
-  late final LocalHttpServer _server = LocalHttpServer(
-    onAction: (action) {
-      onAction?.call(action);
-    },
-  );
+  final LocalHttpServer _server;
 
-  void Function(GameAction)? onAction;
-
+  HostService({
+    required LocalHttpServer server,
+  }) : _server = server;
 
   Future<HostingInfo> startHosting() async {
     try {
@@ -40,7 +18,8 @@ class HostService implements NetworkingService {
 
       await _server.start();
 
-      final address = await _hotspot.getAddress() ?? h.address;
+      final address =
+          await _hotspot.getAddress() ?? h.address;
 
       var mdnsStarted = false;
 
@@ -51,7 +30,6 @@ class HostService implements NetworkingService {
           mdnsStarted = true;
         } catch (e) {
           await _hotspot.releaseMulticastLock();
-          // Hosting still works without mDNS.
         }
       }
 
@@ -77,15 +55,12 @@ class HostService implements NetworkingService {
   }
 }
 
-
-
 class HostingInfo {
   final HotspotInfo hotspot;
   final bool mdnsStarted;
 
-  HostingInfo({
+  const HostingInfo({
     required this.hotspot,
     required this.mdnsStarted,
   });
 }
-

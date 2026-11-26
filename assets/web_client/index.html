@@ -1,38 +1,43 @@
 <!doctype html>
-<html>
+<html lang="en">
+
 <head>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>LocalPlay</title>
+  <link rel="stylesheet" href="/web/style.css">
 </head>
+
 <body>
-  <h2>LocalPlay - Client</h2>
-
-  <button id="playCard">Play Red 5</button>
-  <p id="status"></p>
-
-  <script>
-    document.getElementById('playCard').addEventListener('click', async () => {
-      const status = document.getElementById('status');
-
-      try {
-        const response = await fetch('/action', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            type: 'playCard',
-            card: 'red_5'
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error('HTTP ' + response.status);
-        }
-
-        status.textContent = 'Card played!';
-      } catch (err) {
-        status.textContent = 'Error: ' + err;
-      }
-    });
-  </script>
+  <header>
+    <h1>LocalPlay</h1>
+    <div id="connection" role="status">Offline multiplayer</div>
+  </header>
+  <section id="joinSection">
+    <h2>Join the lobby</h2>
+    <form id="joinForm"><input id="name" required maxlength="24" placeholder="Your name" autocomplete="nickname"><button
+        type="submit">Join</button></form>
+  </section>
+  <section id="gameSection" hidden>
+    <h2 id="title"></h2>
+    <p id="status" role="status"></p>
+    <p id="info"></p>
+    <div id="privateSection" hidden>
+      <img id="privateCard" alt="Your private card" hidden>
+      <p id="privateText" hidden></p>
+    </div>
+    <div id="players"></div>
+    <section id="cardSection" hidden>
+      <h2 id="tableLabel">Table</h2>
+      <div id="table" class="cards"></div>
+      <h2>Your hand</h2>
+      <div id="hand" class="cards"></div>
+    </section>
+    <div id="actions"></div>
+    <footer><button id="leave" hidden>Leave lobby</button></footer>
+  </section>
+  <p id="error" role="alert"></p>
+  <script type="module" src="/web/app.js"></script>
 </body>
+
 </html>
